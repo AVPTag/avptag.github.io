@@ -5,53 +5,149 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AVPTag – Run Gorilla Tag on Vision Pro</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
       background: radial-gradient(circle at center, #4b0082, #000);
       color: white;
-      text-align: center;
-      padding: 5rem 2rem;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
+
+    /* --- HERO --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
     h1 {
-      font-size: 3rem;
+      font-size: 4rem;
       background: linear-gradient(90deg, #a855f7, #6366f1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      animation: fadeIn 2s ease-out;
     }
+
     p {
       max-width: 600px;
-      margin: 1rem auto;
-      opacity: 0.8;
-    }
-    button {
-      background: linear-gradient(90deg, #8b5cf6, #4f46e5);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 9999px;
       font-size: 1.2rem;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      opacity: 0.85;
+      margin-bottom: 2rem;
+      animation: fadeIn 2.5s ease-out;
     }
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+
+    .scroll-down {
+      margin-top: 2rem;
+      font-size: 1rem;
+      opacity: 0.6;
+      animation: bounce 1.5s infinite;
     }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    /* --- SCROLL SECTIONS --- */
+    .section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section img {
+      width: 340px;
+      max-width: 80%;
+      margin-bottom: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.15);
+    }
+
+    .section h2 {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #a78bfa, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section p {
+      max-width: 650px;
+      text-align: center;
+      line-height: 1.6;
+      opacity: 0.85;
+      font-size: 1.1rem;
+    }
+
     footer {
-      margin-top: 4rem;
+      padding: 3rem;
+      text-align: center;
       font-size: 0.9rem;
       opacity: 0.5;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <h1>AVPTag</h1>
-  <p>The ultimate way to play <strong>Gorilla Tag</strong> on your <strong>Apple Vision Pro</strong>. Built by <a href="https://youtube.com/@hopefullty" style="color:#a78bfa;">Hopefullty</a>.</p>
+  <!-- HERO -->
+  <section class="hero">
+    <h1>AVPTag</h1>
+    <p>Play <strong>Gorilla Tag</strong> in true mixed reality — right on your <strong>Apple Vision Pro</strong>.</p>
+    <div class="scroll-down">↓ Scroll for more ↓</div>
+  </section>
 
-  <button id="launch">🚀 Launch AVPTag</button>
+  <!-- SECTION 1 -->
+  <section class="section">
+    <img src="/applevisionpro.png" alt="Apple Vision Pro">
+    <h2>Immersive Experience</h2>
+    <p>AVPTag merges the chaos of Gorilla Tag with the clarity of Vision Pro’s high-fidelity displays — giving you a wild, realistic playground you can *literally* move through.</p>
+  </section>
 
-  <p id="status" style="margin-top:2rem; display:none;">nah bitch u ain't got that >:)</p>
+  <!-- SECTION 2 -->
+  <section class="section">
+    <h2>Built by Hopefullty</h2>
+    <p>Created from scratch by <strong>Hopefullty</strong> — the same savage mind behind SkeletonOS. AVPTag isn’t just a port… it’s a whole new level of VR insanity.</p>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section class="section">
+    <h2>Coming Soon</h2>
+    <p>Stay tuned on <a href="https://youtube.com/@hopefullty" style="color:#a78bfa;text-decoration:none;">@Hopefullty</a> for updates, releases, and how to get AVPTag running on your Vision Pro.</p>
+  </section>
 
   <footer>#AVPTag | Made by Hopefullty 🧠</footer>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
 </body>
 </html>
